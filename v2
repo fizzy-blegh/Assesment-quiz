@@ -1,0 +1,53 @@
+# Assesment Planning
+import random
+# setting up constants to make my program more flexible and easy to change
+MIN_QUESTS = 1
+MAX_QUESTS = 50
+DEFAULT_QUESTS = 5
+
+def main():
+    print("WELCOME to the math quiz!!")
+    # while true loop and try/except to ask for number of questions. to make sure program doesnt crash on invalid input
+    while True:
+        rounds_input = input(f"How many questions ({MIN_QUESTS}-{MAX_QUESTS})? [Enter for default questions, which is {DEFAULT_QUESTS}, or 'xxx' for infinite]: ").lower()
+
+        infinite_mode=False
+        target_rounds=0
+
+        if rounds_input == 'xxx':
+            infinite_mode = True
+            print("Infinite mode activated! Type 'xxx' anytime to quit :)")
+        elif rounds_input == "":
+            target_rounds = DEFAULT_QUESTS
+            print(f"Goal set to {target_rounds} rounds!")
+        else:
+            try:
+                target_rounds = int(rounds_input)
+                # Simple boundary check
+                if target_rounds < MIN_QUESTS or target_rounds > MAX_QUESTS:
+                    print(f"Out of range! Defaulting to {DEFAULT_QUESTS} rounds.")
+                    target_rounds = DEFAULT_QUESTS
+            except ValueError:
+                print(f"Invalid input! Defaulting to {DEFAULT_QUESTS} rounds.")
+                target_rounds = DEFAULT_QUESTS
+    # make a list to store history and our score counter
+    quiz_history=[]
+    score= 0
+
+
+    # Main loop
+    #
+    #  -Generate 2 random numbers
+    # -do the math
+    # -ask for input
+    # -check if input is correct
+    # - if correct, tell them
+    # - if wrong, tell them the correct answer
+    # -store data using a list, append sub list (question, user answer, correct answer, status)
+
+    # calculate percentage
+
+    # Ask the user if they want to see their history
+    #for loop to print each row in quiz_history list
+    #Display final summary
+main()
