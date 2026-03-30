@@ -1,0 +1,67 @@
+# Assesment Planning
+import random
+# setting up constants to make my program more flexible and easy to change
+MIN_QUESTS = 1
+MAX_QUESTS = 50
+
+
+def main():
+    print("WELCOME to the math quiz!!")
+    # while true loop and try/except to ask for number of questions. to make sure program doesnt crash on invalid input
+    while True:
+        rounds_input = input(f"How many questions ({MIN_QUESTS}-{MAX_QUESTS})?, or 'xxx' for infinite number of questions: ").lower()
+
+        infinite_mode = False
+        target_rounds=0
+
+        if rounds_input == "xxx":
+            infinite_mode = True
+            print("Infinite mode activated! Type 'xxx' anytime to quit :)")
+            break
+        elif rounds_input == "":
+            target_rounds = (rounds_input)
+            print(f"Goal set to {target_rounds} rounds!")
+        else:
+            try:
+                target_rounds = int(rounds_input)
+                # Simple boundary check
+                if target_rounds < MIN_QUESTS or target_rounds > MAX_QUESTS:
+                    print(f"Out of range! Please enter {rounds_input}")
+                    target_rounds =  (rounds_input)
+            except ValueError:
+                print(f"Invalid input! please eneter {rounds_input}.")
+                target_rounds = rounds_input
+    # make a list to store history and our score counter
+    quiz_history=[]
+    score= 0
+    rounds_played = 0
+
+    # Main loop
+    while infinite_mode or rounds_played < target_rounds:
+        #  -Generate 2 random numbers
+        num1 = random.randint(-100,100)
+        num2=(-100, 100)
+        operations = ["+","-", "*", ]
+        chosen_op = random.choice(operations)
+        # -do the math
+        if chosen_op == "+":
+            answer= num1 + num2
+        if chosen_op == "-":
+            answer = num1 - num2
+        if chosen_op == "*":
+            answer = num1 * num2
+        # -ask for input
+        userchoice= input(f"what is {num1}{chosen_op}{num2}")
+        if userchoice == 'xxx':
+            break
+        # -check if input is correct
+        # - if correct, tell them
+        # - if wrong, tell them the correct answer
+        # -store data using a list, append sub list (question, user answer, correct answer, status)
+        #
+        # calculate percentage
+        #
+        # Ask the user if they want to see their history
+        # for loop to print each row in quiz_history list
+        # Display final summary
+main()
