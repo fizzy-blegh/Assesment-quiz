@@ -1,0 +1,98 @@
+# Assesment Planning
+import random
+# setting up constants to make my program more flexible and easy to change
+MIN_QUESTS = 1
+MAX_QUESTS = 50
+
+
+def main():
+    print("WELCOME to the math quiz!!")
+    # while true loop and try/except to ask for number of questions. to make sure program doesnt crash on invalid input
+    while True:
+        rounds_input = input(f"How many questions ({MIN_QUESTS}-{MAX_QUESTS})?, or 'xxx' for infinite number of questions: ").lower()
+        infinite_mode = False
+        target_rounds=0
+
+        if rounds_input == "xxx":
+            infinite_mode = True
+            print("Infinite mode activated! Type 'xxx' anytime to quit :)")
+            break
+
+        else:
+            try:
+                target_rounds = int(rounds_input)
+                if MIN_QUESTS <= target_rounds <= MAX_QUESTS:
+                    print(f"Goal set to {target_rounds} rounds!")
+                    break
+                else:
+                    print(f"Out of range!")
+            except ValueError:
+                print("Invalid input!")
+
+    # make a list to store history and our score counter
+
+    score= 0
+    rounds_played = 0
+
+    # Main loop
+    quiz_history = []
+    while infinite_mode or rounds_played < target_rounds:
+
+        #  -Generate 2 random numbers
+        num1 = random.randint(1,100)
+        num2= random.randint(0,100)
+        operations = ["+","-", "*", ]
+        chosen_op = random.choice(operations)
+        # -do the math
+        if chosen_op == "+":
+            answer= num1 + num2
+        elif chosen_op == "-":
+            answer = num1 - num2
+        elif chosen_op == "*":
+            answer = num1 * num2
+
+
+        # Ask for input as text first
+        user_choice = input(f"What is {num1} {chosen_op} {num2}? ").lower()
+
+        # Check if the user wants to quit first
+        if user_choice == 'xxx':
+            break
+        try:
+            user_choice = int(user_choice)
+            # only count the round if a valid number is entered
+            rounds_played += 1
+
+            if user_choice == answer:
+                print("Correct!")
+                score += 1
+                result = "Correct"
+            else:
+                print(f"Wrong! Answer was {answer}")
+                result = "Wrong"
+
+            # -store data using a list, append sub list (question, user answer, correct answer, status)
+            # We save the full question as one string so it's easier to print later
+            question_string = f"{num1} {chosen_op} {num2}"
+            quiz_history.append([question_string, user_choice, answer, result])
+        except ValueError:
+            print("That's not a number! Skipping this round.")
+            continue
+
+
+    # calculate percentage
+    if score > 0:
+        percent = (score / rounds_played) * 100
+    else:
+        percent = 0
+    # Ask the user if they want to see their history
+    history_confirm = input("Press 'h' to see history: ").lower()
+    if history_confirm == "h":
+        # for loop to print each row in quiz_history list
+        for item in quiz_history:
+            print(f"Question: {item[0]:<10} | Your Answer: {item[1]:<5} | Status: {item[3]}")
+    # for loop to print each row in quiz_history list
+    # Display final summary
+    print(f"Thanks for playing! Your score was {percent:.1f}%")
+
+main()
